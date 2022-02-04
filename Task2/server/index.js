@@ -7,6 +7,7 @@ dotenv.config()
 
 // Import routers
 const authRouter = require('./routes/auth')
+const dashboard = require('./routes/dashboard')
 
 // Connect to MongoDB
 mongoose.connect(process.env.DB_CONNECTION, () => {
@@ -18,6 +19,7 @@ app.use(express.json())
 
 // Routers middlewares
 app.use('/api/user', authRouter)
+app.use('/api/dashboard', dashboard)
 
 app.listen(5000, () => {
   console.log('Server listening on port 5000')
