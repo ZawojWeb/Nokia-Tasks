@@ -2,6 +2,7 @@ const router = require('express').Router()
 const bcrypt = require('bcryptjs/dist/bcrypt')
 const User = require('../model/User')
 const jwt = require('jsonwebtoken')
+const verified = require('./verifiToken')
 const { loginValidation, registerValidation } = require('../validation')
 
 router.post('/register', async (req, res) => {
@@ -25,7 +26,8 @@ router.post('/register', async (req, res) => {
   })
   try {
     const savedUser = await user.save()
-    res.send({ user: savedUser.id })
+    const jwtToken = jwt.sign({ _id: savedUser.id }, process.env.TOKEN_SECRET)
+    return res.json({ jwtToken })
   } catch (error) {
     res.status(400).send(error)
   }
@@ -45,8 +47,17 @@ router.post('/login', async (req, res) => {
   if (!vaildPassword) return res.status(400).send('Email or password is wrong! Please try again.')
 
   // Create a token
-  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
-  res.header('auth-token', token).send(token)
+  const jwtToken = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
+  return res.json({ jwtToken })
+})
+
+router.post('/verify', verified, (req, res) => {
+  try {
+    res.json(true)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server error')
+  }
 })
 
 module.exports = router
