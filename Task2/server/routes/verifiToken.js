@@ -8,7 +8,6 @@ module.exports = function (req, res, next) {
     // Return the id (which is hashed in the token)
     const verified = jwt.verify(token, process.env.TOKEN_SECRET)
     req.user = verified
-    console.log(verified)
     next()
   } catch (error) {
     return res.status(401).json('Not authorized')

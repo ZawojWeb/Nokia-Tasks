@@ -14,6 +14,7 @@ toast.configure()
 
 function App() {
   const [favoriteList, setFavoriteList] = useState([])
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const checkAuthenticated = async () => {
     try {
@@ -33,8 +34,6 @@ function App() {
   useEffect(() => {
     checkAuthenticated()
   }, [])
-
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const setAuth = (boolean) => {
     setIsAuthenticated(boolean)
@@ -63,8 +62,8 @@ function App() {
       <Routes>
         <Route exact path='/' element={isAuthenticated ? <Dashboard setAuth={setAuth} /> : <Login setAuth={setAuth} />} />
         <Route exact path='/favorite' element={isAuthenticated ? <Favorite favoriteList={favoriteList} setFavoriteList={setFavoriteList} /> : <Login setAuth={setAuth} />} />
-        <Route exact path='/login' element={!isAuthenticated ? <Login setAuth={setAuth} /> : <Dashboard setAuth={setAuth} favoriteList={favoriteList} setFavoriteList={setFavoriteList} />} />
-        <Route exact path='/register' element={!isAuthenticated ? <Register setAuth={setAuth} /> : <Dashboard setAuth={setAuth} favoriteList={favoriteList} setFavoriteList={setFavoriteList} />} />
+        <Route exact path='/login' element={!isAuthenticated ? <Login setAuth={setAuth} /> : <Dashboard setAuth={setAuth} />} />
+        <Route exact path='/register' element={!isAuthenticated ? <Register setAuth={setAuth} /> : <Dashboard setAuth={setAuth} />} />
       </Routes>
     </Fragment>
   )
