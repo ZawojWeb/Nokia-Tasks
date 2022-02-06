@@ -44,8 +44,8 @@ const Login = ({ setAuth }) => {
     <div>
       <h1 className='mt-5 text-center'>Login</h1>
       <form onSubmit={onSubmitForm}>
-        <input type='text' name='email' value={email} onChange={(e) => onChange(e)} className='form-control my-3' />
-        <input type='password' name='password' value={password} onChange={(e) => onChange(e)} className='form-control my-3' />
+        <input type='text' name='email' value={email} onChange={(e) => onChange(e)} className='form-control my-3' placeholder='email' />
+        <input type='password' name='password' value={password} onChange={(e) => onChange(e)} className='form-control my-3' placeholder='password' />
         <button class='btn btn-success btn-block'>Submit</button>
       </form>
       {/* <Link to='/register'>register</Link> */}

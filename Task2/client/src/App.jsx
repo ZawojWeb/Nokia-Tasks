@@ -5,14 +5,16 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 //components
-
-import Login from './components/Login'
-import Register from './components/Register'
-import Dashboard from './components/Dashboard'
+import Login from './components/pages/Login'
+import Register from './components/pages/Register'
+import Dashboard from './components/pages/Dashboard'
+import Favorite from './components/pages/Favorite'
 
 toast.configure()
 
 function App() {
+  const [favoriteList, setFavoriteList] = useState([])
+
   const checkAuthenticated = async () => {
     try {
       const res = await fetch('http://localhost:5000/api/user/verify', {
@@ -47,6 +49,9 @@ function App() {
               <Link to='/'>Dashboard</Link>
             </li>
             <li>
+              <Link to='/favorite'>Favorite</Link>
+            </li>
+            <li>
               <Link to='/login'>Login</Link>
             </li>
             <li>
@@ -57,8 +62,9 @@ function App() {
       </div>
       <Routes>
         <Route exact path='/' element={isAuthenticated ? <Dashboard setAuth={setAuth} /> : <Login setAuth={setAuth} />} />
-        <Route exact path='/login' element={!isAuthenticated ? <Login setAuth={setAuth} /> : <Dashboard setAuth={setAuth} />} />
-        <Route exact path='/register' element={!isAuthenticated ? <Register setAuth={setAuth} /> : <Dashboard setAuth={setAuth} />} />
+        <Route exact path='/favorite' element={isAuthenticated ? <Favorite favoriteList={favoriteList} setFavoriteList={setFavoriteList} /> : <Login setAuth={setAuth} />} />
+        <Route exact path='/login' element={!isAuthenticated ? <Login setAuth={setAuth} /> : <Dashboard setAuth={setAuth} favoriteList={favoriteList} setFavoriteList={setFavoriteList} />} />
+        <Route exact path='/register' element={!isAuthenticated ? <Register setAuth={setAuth} /> : <Dashboard setAuth={setAuth} favoriteList={favoriteList} setFavoriteList={setFavoriteList} />} />
       </Routes>
     </Fragment>
   )

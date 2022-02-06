@@ -5,7 +5,6 @@ const Dashboard = ({ setAuth }) => {
   const [name, setName] = useState('')
 
   const getProfile = async () => {
-    console.log(localStorage.token)
     try {
       const res = await fetch('http://localhost:5000/api/dashboard', {
         method: 'GET',
