@@ -1,7 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Link, Routes, Route } from 'react-router-dom'
 import { toast } from 'react-toastify'
-
+import styled from 'styled-components'
+import './index.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 //components
@@ -42,7 +43,7 @@ function App() {
   return (
     <Fragment>
       <div>
-        <nav>
+        <Stylednav>
           <ul>
             <li>
               <Link to='/'>Dashboard</Link>
@@ -57,7 +58,7 @@ function App() {
               <Link to='/register'>Register</Link>
             </li>
           </ul>
-        </nav>
+        </Stylednav>
       </div>
       <Routes>
         <Route exact path='/' element={isAuthenticated ? <Dashboard setAuth={setAuth} /> : <Login setAuth={setAuth} />} />
@@ -68,5 +69,27 @@ function App() {
     </Fragment>
   )
 }
+const Stylednav = styled.div`
+  background: #311b92;
+  margin: 0;
+  padding: 5px;
 
+  ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px 0px;
+    list-style-type: none;
+
+    a {
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 900;
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+`
 export default App
