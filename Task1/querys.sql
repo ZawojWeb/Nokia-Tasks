@@ -69,4 +69,4 @@ INSERT INTO name_version (Name,Version,Data) VALUES ("John",1,1),
         (SELECT * FROM result1) UNION ALL (SELECT * FROM result2);
 
     END;
-    CALL searchProc("Ja");
+    CALL searchProc("s");

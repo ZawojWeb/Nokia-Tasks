@@ -1,0 +1,34 @@
+# AWS and GitLab CI
+
+stages:
+  - build
+  - deploy
+
+# Build stage, create image of alpine
+build:
+  stage: build
+  image: alpine #Dokcer can be also
+  before_script:
+    - apk add zip #Package for ziping
+  script:
+    - mkdir public
+    - touch public/index.html
+    - echo "<h1>Nokie please hire me.<h1>" >> public/index.html
+    - zip -r public.zip public #Zip our folders
+  artifacts:
+    paths:
+      - public.zip #It's for "publish" folder for next stage
+
+deploy:
+  stage: deploy
+  image: alpine
+  before_script:
+    - apk add openssh-client #Bcs alpine do not have openssh-client
+    - eval $(ssh-agent -s) #Start the SSH agent
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - #Add our SSH Private Key from our GitLab project variables on server and add to openssh client
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - scp -o StrictHostKeyChecking=no public.zip zawojweb@ec2-54-87-73-173.compute-1.amazonaws.com:/home/zawojweb/htdocs
+    - ssh -o StrictHostKeyChecking=no zawojweb@ec2-54-87-73-173.compute-1.amazonaws.com "cd /home/zawojweb/htdocs; unzip public.zip"
+# ec2-54-211-223-19.compute-1.amazonaws.com <- Sample address

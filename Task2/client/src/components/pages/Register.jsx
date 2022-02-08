@@ -25,6 +25,7 @@ const Register = ({ setAuth }) => {
         body: JSON.stringify(body),
       })
       const parseRes = await response.json()
+      console.log(parseRes)
 
       if (parseRes.jwtToken) {
         localStorage.setItem('token', parseRes.jwtToken)
@@ -46,7 +47,9 @@ const Register = ({ setAuth }) => {
         <input type='text' name='email' value={email} placeholder='email' onChange={(e) => onChange(e)} className='form-control my-3' />
         <input type='password' name='password' value={password} placeholder='password' onChange={(e) => onChange(e)} className='form-control my-3' />
         <input type='text' name='name' value={name} placeholder='name' onChange={(e) => onChange(e)} className='form-control my-3' />
-        <button className='btn btn-success btn-block'>Submit</button>
+        <button className='btn btn-success btn-block' onClick={onSubmitForm}>
+          Submit
+        </button>
       </form>
       {/* <Link to='/login'>login</Link> */}
     </RegisterStyled>
