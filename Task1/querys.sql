@@ -30,7 +30,8 @@ INSERT INTO name_version (Name,Version,Data) VALUES ("John",1,1),
     ORDER BY a.name;
 
 
-    CREATE TEMPORARY TABLE tempTable SELECT a.name, a.version,a.data
+    CREATE TEMPORARY TABLE tempTable 
+    SELECT a.name, a.version,a.data
     FROM name_version a
     INNER JOIN (
         SELECT name, MAX(version) ver
@@ -67,6 +68,8 @@ INSERT INTO name_version (Name,Version,Data) VALUES ("John",1,1),
 
 
         (SELECT * FROM result1) UNION ALL (SELECT * FROM result2);
-
+        -- SELECT * FROM result1;
+        -- SELECT * FROM result2;
     END;
-    CALL searchProc("s");
+    CALL searchProc("Ja");
+

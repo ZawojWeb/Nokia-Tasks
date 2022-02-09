@@ -10,7 +10,12 @@ router.get('/', verified, async (req, res) => {
 
 router.put('/add', verified, async (req, res) => {
   const movieID = req.header('movieID')
-  const checkIfMovieIsInFavorite = await User.findOne({ favorites: movieID })
+
+  const checkIfMovieIsInFavorite = await User.findOne({ id: req.user._id }, { favorites: movieID })
+
+  console.log(checkIfMovieIsInFavorite)
+  console.log(req.user._id)
+
   if (!checkIfMovieIsInFavorite) {
     const newFavorite = await User.updateOne({ _id: req.user._id }, { $push: { favorites: movieID } })
     res.status(200).send('Successfully added!')
